@@ -1,11 +1,10 @@
-# UK Wind Forecast Accuracy
+﻿# UK Wind Forecast Accuracy
 
 ## Overview
 
-This application compares day-ahead UK wind generation forecasts with metered actual generation.
-It covers a January 2026 decision window, with delivery dates from 2 January through 1 February.
-For each delivery hour, it uses the latest forecast available by 09:00 Europe/London on D-1.
-The API serves processed data; the frontend presents decision and accuracy views.
+Compares day-ahead UK wind forecasts with metered actual generation.
+Covers the January 2026 decision window (deliveries 2 January to 1 February).
+Uses the latest forecast published by 09:00 Europe/London on D-1.
 
 ## Live app
 
@@ -15,121 +14,112 @@ The API serves processed data; the frontend presents decision and accuracy views
 
 ## Files and directories
 
-Generated from tracked paths returned by `git ls-files`; each tracked folder and file has a one-line description.
+This inventory covers the tracked paths from `git ls-files`.
 
-```text
-Energy_forecast/ - Application source, deployment configuration, and documentation.
-|-- .dockerignore - Filters Docker build contexts.
-|-- .gitignore - Ignores local environments, caches, and generated artifacts.
-|-- backend/ - FastAPI service, tests, and bundled processed data.
-|   |-- .dockerignore - Excludes backend development files from its image build.
-|   |-- .env.example - Example backend environment variables.
-|   |-- app/ - API implementation and schemas.
-|   |   |-- __init__.py - Backend application package marker.
-|   |   |-- main.py - FastAPI application, data loading, and routes.
-|   |   |-- models.py - API request and response schemas.
-|   |   \-- services/ - Backend metric logic.
-|   |       |-- __init__.py - Services package marker.
-|   |       \-- metrics.py - Forecast accuracy metric calculations.
-|   |-- data/ - Processed parquet bundled with the API.
-|   |   \-- wind_forecast_accuracy.parquet - Hourly forecast and actual data bundled with the API.
-|   |-- Dockerfile - Builds the non-root Python API image with its data.
-|   |-- metrics_output.json - Saved metric summary for the processed dataset.
-|   |-- requirements.txt - Pinned backend and test dependencies.
-|   |-- run_metrics.py - Prints and saves forecast metrics.
-|   |-- run_server.py - Starts the backend development server.
-|   \-- tests/ - Automated backend tests.
-|       |-- __init__.py - Backend test package marker.
-|       |-- test_api.py - API endpoint tests.
-|       |-- test_cutoff_violations.py - Tests selected forecast cutoff compliance.
-|       |-- test_forecast_selection.py - Tests forecast selection logic.
-|       \-- test_metrics.py - Tests metric calculations and API behavior.
-|-- docker-compose.yml - Builds and runs backend and frontend services.
-|-- frontend/ - React/Vite application and deployment configuration.
-|   |-- .dockerignore - Excludes frontend development files from its image build.
-|   |-- .env.example - Example frontend API URL.
-|   |-- .gitignore - Ignores frontend dependencies, output, and local env files.
-|   |-- .oxlintrc.json - Oxlint configuration.
-|   |-- Dockerfile - Builds the Vite app and serves it with Nginx.
-|   |-- index.html - Browser HTML entry point.
-|   |-- nginx.conf - Nginx SPA fallback configuration.
-|   |-- package-lock.json - Locked npm dependency tree.
-|   |-- package.json - Frontend dependencies and npm scripts.
-|   |-- public/ - Static public assets.
-|   |   |-- favicon.svg - Browser favicon.
-|   |   \-- icons.svg - Reusable SVG icons.
-|   |-- src/ - Frontend source code.
-|   |   |-- App.css - Top-level application styles.
-|   |   |-- App.jsx - Application shell and navigation.
-|   |   |-- assets/ - Frontend images and logo assets.
-|   |   |   |-- hero.png - Frontend hero artwork.
-|   |   |   |-- react.svg - React logo asset.
-|   |   |   \-- vite.svg - Vite logo asset.
-|   |   |-- components/ - User interface views and styles.
-|   |   |   |-- AccuracyView.css - Accuracy page styles.
-|   |   |   |-- AccuracyView.jsx - Accuracy metrics and charts.
-|   |   |   |-- DecisionView.css - Decision page styles.
-|   |   |   \-- DecisionView.jsx - Decision forecast, actuals, and uncertainty band.
-|   |   |-- index.css - Global frontend styles.
-|   |   |-- main.jsx - Mounts the React application.
-|   |   \-- services/ - Frontend backend client.
-|   |       \-- api.js - Backend API client.
-|   |-- vercel.json - Vercel SPA route rewrites.
-|   \-- vite.config.js - Vite and React plugin configuration.
-|-- ingestion/ - Elexon fetch and processing workflow.
-|   |-- __init__.py - Ingestion package marker.
-|   |-- bias_sanity_check.py - Exploratory forecast bias checks.
-|   |-- check_row_integrity.py - Checks hourly record counts, duplicates, and gaps.
-|   |-- config.py - Elexon endpoints, date range, cutoff, and output settings.
-|   |-- data/ - Processed ingestion outputs.
-|   |   \-- wind_forecast_accuracy.parquet - Processed parquet output from ingestion.
-|   |-- fetch_elexon.py - Fetches Elexon actuals and forecasts.
-|   |-- ingest.py - Runs fetching, selection, joining, and export.
-|   |-- investigate_cutoff.py - Investigates publication times around the cutoff.
-|   |-- process_data.py - Cleans, selects, joins, and scores records.
-|   |-- requirements.txt - Ingestion dependencies.
-|   \-- verify.py - Inspects forecast publication records.
-\-- README.md - Project setup, method, results, and tracked-file inventory.
-```
+| Directory | Description |
+|---|---|
+| `.` | Project docs and Docker Compose configuration. |
+| `backend/` | FastAPI service, tests, and bundled processed data. |
+| `backend/app/` | API application and schemas. |
+| `backend/app/services/` | Forecast metric calculations. |
+| `backend/data/` | Parquet data bundled with the API. |
+| `backend/tests/` | Backend API, metric, and forecast selection tests. |
+| `frontend/` | React/Vite application and deployment configuration. |
+| `frontend/public/` | Static browser icons. |
+| `frontend/src/` | Frontend source and global styles. |
+| `frontend/src/assets/` | Static images and logos. |
+| `frontend/src/components/` | Decision and accuracy views and styles. |
+| `frontend/src/services/` | Frontend API client. |
+| `ingestion/` | Elexon data retrieval and processing scripts. |
+| `ingestion/data/` | Processed ingestion output. |
+
+| File or group | Description |
+|---|---|
+| `README.md` | This setup, method, results, and limitations guide. |
+| `.dockerignore`, `.gitignore` | Root Docker build exclusions and Git ignore rules. |
+| `docker-compose.yml` | Runs the API and frontend containers. |
+| `backend/Dockerfile`, `backend/.dockerignore` | Builds the backend image and filters its build context. |
+| `backend/.env.example` | Example values for `ALLOWED_ORIGINS` and `DATA_PATH`. |
+| `backend/app/main.py` | FastAPI routes and startup data loading. |
+| `backend/app/models.py` | API response schemas. |
+| `backend/app/services/metrics.py` | Metrics and time-series calculations. |
+| `backend/data/wind_forecast_accuracy.parquet` | Bundled January 2026 hourly forecast and actuals. |
+| `backend/requirements.txt` | Backend and test dependencies. |
+| `backend/run_server.py`, `backend/run_metrics.py` | Start the API and print dataset metrics. |
+| `backend/metrics_output.json` | Saved metrics summary. |
+| `backend/tests/test_*.py` | API, cutoff, forecast selection, and metric tests. |
+| `__init__.py` files | Python package markers in backend and ingestion. |
+| `frontend/Dockerfile`, `frontend/.dockerignore` | Builds and serves the frontend image. |
+| `frontend/.env.example` | Example `VITE_API_URL` value. |
+| `frontend/vercel.json`, `frontend/nginx.conf` | SPA route fallback for Vercel and Nginx. |
+| `frontend/package.json`, `frontend/package-lock.json` | Frontend dependencies and scripts, with locked versions. |
+| `frontend/.gitignore`, `frontend/.oxlintrc.json` | Frontend ignore rules and Oxlint configuration. |
+| `frontend/index.html`, `frontend/vite.config.js` | Browser entry document and Vite configuration. |
+| `frontend/src/App.jsx`, `frontend/src/App.css` | Application shell, navigation, and top-level styles. |
+| `frontend/src/main.jsx`, `frontend/src/index.css` | React mount point and global styles. |
+| `frontend/src/components/AccuracyView.*` | Accuracy metrics and charts. |
+| `frontend/src/components/DecisionView.*` | Daily forecast, actuals, and uncertainty band. |
+| `frontend/src/services/api.js` | Calls the backend endpoints. |
+| `frontend/src/assets/` and `frontend/public/` assets | Hero image, framework logos, favicon, and SVG icons. |
+| `ingestion/config.py` | Elexon endpoints, date window, cutoff, and output settings. |
+| `ingestion/fetch_elexon.py` | Fetches actual and forecast records. |
+| `ingestion/process_data.py` | Cleans, selects, joins, and scores records. |
+| `ingestion/ingest.py` | Runs ingestion and writes the processed parquet. |
+| `ingestion/requirements.txt` | Ingestion dependencies. |
+| `ingestion/bias_sanity_check.py`, `ingestion/investigate_cutoff.py`, `ingestion/verify.py` | Exploratory bias, cutoff, and forecast publication checks. |
+| `ingestion/check_row_integrity.py` | Checks hourly counts, duplicates, and timestamp gaps. |
+| `ingestion/data/wind_forecast_accuracy.parquet` | Parquet output from ingestion. |
 
 ## Start the application
 
 ### Docker
 
-From the repository root:
-
 ```sh
 docker compose up --build
 ```
 
-The API is on port 8000 and the frontend is on port 3000.
+API: port 8000. Frontend: port 3000.
 
-### Without Docker
-
-Backend:
+### Local backend (without Docker)
 
 ```sh
 cd backend
 python -m venv .venv
-# Activate the virtual environment, then:
-pip install -r requirements.txt
-python run_server.py
+# Activate .venv, then install and start:
+pip install -r requirements.txt && python run_server.py
 ```
 
-Set `DATA_PATH` if the parquet is outside its bundled default. Set `ALLOWED_ORIGINS` to comma-separated frontend origins. See `backend/.env.example`.
+On Windows PowerShell, activate with `.venv\Scripts\Activate.ps1`; on macOS/Linux, use `source .venv/bin/activate`.
 
-Frontend, in a second terminal:
+### Local frontend (without Docker)
 
 ```sh
 cd frontend
 npm install
-# Set VITE_API_URL=http://localhost:8000; see frontend/.env.example.
+# Set VITE_API_URL=http://localhost:8000
 npm run dev
 ```
 
+The frontend runs in its development server; keep the backend running in the other terminal.
+
+| Variable | Purpose |
+|---|---|
+| `VITE_API_URL` | Backend base URL used by the frontend build. |
+| `ALLOWED_ORIGINS` | Comma-separated browser origins accepted by the API. |
+| `DATA_PATH` | Processed parquet path; defaults to `backend/data/wind_forecast_accuracy.parquet`. |
+
+See `frontend/.env.example` and `backend/.env.example` for local examples.
+
 ### Re-run ingestion
 
-Install `ingestion/requirements.txt`, then run `python ingest.py` from `ingestion/`. This writes `ingestion/data/wind_forecast_accuracy.parquet`. Copy the refreshed parquet to `backend/data/wind_forecast_accuracy.parquet` before rebuilding or restarting the backend.
+```sh
+cd ingestion
+python -m venv .venv
+pip install -r requirements.txt
+python ingest.py
+```
+
+Copy the refreshed `ingestion/data/wind_forecast_accuracy.parquet` to `backend/data/` before restarting or rebuilding the API.
 
 ### Run tests
 
@@ -140,24 +130,30 @@ python -m pytest
 
 ## Method and assumptions
 
-For each delivery timestamp, ingestion selects the forecast with the latest `publishTime` at or before 09:00 Europe/London on D-1. Timestamps are stored and compared in UTC. WINDFOR is hourly, so 744 hourly periods are compared over this 31-day window; FUELHH actuals at `:30` are dropped by the inner join. The cutoff assumes `publishTime` represents when the forecast was operationally available.
+- Selects the forecast with the latest `publishTime` at or before 09:00 Europe/London on D-1.
+- Converts timestamps to UTC for processing and comparison.
+- WINDFOR target timestamps are hourly; no interpolation is applied.
+- The January window contains 744 hourly forecast/actual pairs.
+- The inner join drops FUELHH `:30` actuals without a matching forecast.
 
 ## Key results
 
-- MAE: **2,022 MW** (**17.9%** of mean actual generation)
-- RMSE: **2,497 MW**
-- Bias: **+1,746 MW**, an over-forecast of **15.5%** relative to mean actual generation
-- P90 absolute error: **4,154 MW**
-- Forecasts selected after the cutoff: **0**
+| Metric | January 2026 |
+|---|---:|
+| MAE | 2,022 MW (17.9%) |
+| RMSE | 2,497 MW |
+| Bias | +1,746 MW (15.5% over-forecast) |
+| P90 absolute error | 4,154 MW |
+| Selected forecasts published after cutoff | 0 |
 
 ## Known limitations
 
-- Hourly forecast resolution; half-hourly `:30` actuals are excluded from the join.
-- The dataset shows over-forecasting in January 2026; its cause is unconfirmed.
-- January 2026 only; results may not generalize to other months or seasons.
-- Wind generation only, at national level.
-- The free-tier backend may have a cold start of up to a minute after idle time.
+- Hourly WINDFOR resolution; FUELHH `:30` actuals are dropped in the join.
+- January 2026 shows over-forecasting; its cause is unconfirmed.
+- Results cover January 2026 only and may not generalize to other months.
+- Data is wind generation at national level only.
+- The free-tier backend may take up to a minute to wake after idle.
 
 ## AI usage
 
-AI tools (Kiro and Codex) were used to help build the application. The author reviewed the code and verified the forecast selection logic with tests.
+AI tools Kiro and Codex helped build the application. The author reviewed the code and verified forecast selection logic with tests.
