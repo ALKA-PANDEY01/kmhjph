@@ -13,14 +13,14 @@ df['delivery_date'] = pd.to_datetime(df['startTime']).dt.date
 rows_per_date = df.groupby('delivery_date').size()
 print(f"\nRows per delivery date:")
 print(rows_per_date)
-print(f"\nExpected rows per day: 48 (half-hourly)")
-problematic_dates = rows_per_date[rows_per_date != 48]
+print(f"\nExpected rows per day: 24 (hourly WINDFOR resolution)")
+problematic_dates = rows_per_date[rows_per_date != 24]
 if len(problematic_dates) > 0:
-    print(f"⚠️  Dates with != 48 rows:")
+    print(f"⚠️  Dates with != 24 rows:")
     for date, count in problematic_dates.items():
         print(f"  {date}: {count} rows")
 else:
-    print("✓ All dates have 48 rows")
+    print("✓ All dates have 24 rows")
 
 # Check for missing or duplicate startTime values
 print(f"\n=== DUPLICATES CHECK ===")

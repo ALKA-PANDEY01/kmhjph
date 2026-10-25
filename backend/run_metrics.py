@@ -13,11 +13,10 @@ sys.path.insert(0, str(Path(__file__).parent))
 from app.services.metrics import ForecastMetricsService
 
 def main():
-    # Path to the parquet file from ingestion
-    parquet_path = Path(__file__).parent.parent / 'ingestion' / 'data' / 'wind_forecast_accuracy.parquet'
+    parquet_path = Path(__file__).parent / 'data' / 'wind_forecast_accuracy.parquet'
     
     if not parquet_path.exists():
-        print(f"Error: Parquet file not found at {parquet_path}")
+        print("Error: processed forecast parquet is missing from backend/data.")
         print("Run the ingestion script first: cd ../ingestion && python ingest.py")
         sys.exit(1)
     
@@ -106,7 +105,7 @@ def main():
         json.dump(metrics, f, indent=2)
     
     print()
-    print(f"Full metrics saved to: {output_path}")
+    print(f"Full metrics saved to: {output_path.name}")
     print()
 
 

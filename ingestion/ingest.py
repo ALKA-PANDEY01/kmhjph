@@ -112,7 +112,7 @@ def main():
         logger.info("=" * 60)
         logger.info(f"Records: {len(final_df)}")
         logger.info(f"Time range: {final_df['startTime'].min()} to {final_df['startTime'].max()}")
-        logger.info(f"Output: {output_path.absolute()}")
+        logger.info(f"Output: {output_path.as_posix()}")
         
         # Display sample
         logger.info("\nSample data (first 5 rows):")
