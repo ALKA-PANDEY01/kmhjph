@@ -13,6 +13,8 @@ env/
 data/
 *.parquet
 *.csv
+!backend/data/
+!backend/data/*.parquet
 
 # IDE
 .vscode/

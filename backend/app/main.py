@@ -66,7 +66,7 @@ async def startup_event():
     # Path to parquet file
     parquet_path = Path(os.getenv(
         "DATA_PATH",
-        str(Path(__file__).parent.parent.parent / 'ingestion' / 'data' / 'wind_forecast_accuracy.parquet')
+        str(Path(__file__).parent.parent / 'data' / 'wind_forecast_accuracy.parquet')
     ))
     
     if not parquet_path.exists():

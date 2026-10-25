@@ -1,11 +1,9 @@
 services:
   backend:
     build:
-      context: .
-      dockerfile: backend/Dockerfile
+      context: backend
     environment:
       PORT: "8000"
-      DATA_PATH: /app/data/wind_forecast_accuracy.parquet
     ports:
       - "8000:8000"
 
